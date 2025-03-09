@@ -1,0 +1,24 @@
+.custom-popover {
+    --bs-popover-max-width: 200px;
+    --bs-popover-header-bg: rgb(30, 199, 255);
+    --bs-popover-header-color: var(--bs-white);
+    --bs-popover-inner-border-radius: var(--bs-border-radius-md);
+    --bs-popover-body-padding-x: 50px;
+    --bs-popover-body-padding-y: 20px;
+    --bs-popover-arrow-border: rgb(30, 199, 255);
+    --bs-popover-border-width: 3px;
+    --bs-popover-border-color: rgb(30, 199, 255);
+}
+
+
+.popover-body {
+    color: rgb(30, 199, 255);
+    font-weight: bold;
+    font-size: large;
+    box-shadow: 0px 5px 5px 0px rgba(var(--bs-info-rgb), 0.5);
+}
+
+.popover-header {
+    font-weight: bold;
+    font-size: x-large;
+}

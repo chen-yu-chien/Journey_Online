@@ -1,0 +1,36 @@
+footer>div.container {
+    height: auto;
+    position: static;
+    box-shadow: none;
+}
+
+
+@media (min-width:576px) {
+    footer>div.container {
+        max-width: 540px
+    }
+}
+
+@media (min-width:768px) {
+    footer>div.container {
+        max-width: 720px
+    }
+}
+
+@media (min-width:992px) {
+    footer>div.container {
+        max-width: 960px
+    }
+}
+
+@media (min-width:1200px) {
+    footer>div.container {
+        max-width: 1140px
+    }
+}
+
+@media (min-width:1400px) {
+    footer>div.container {
+        max-width: 1320px
+    }
+}

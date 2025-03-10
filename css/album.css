@@ -1,0 +1,44 @@
+section.container, div.album>div.container, footer>div.container {
+    height: auto;
+    position: static;
+    box-shadow: none;
+}
+
+.bg-title {
+    background-color: rgba(255, 255, 255, 0.655);
+}
+
+@media (min-width:576px) {
+    /* section.container,  */
+    div.album>div.container, footer>div.container {
+        max-width: 540px
+    }
+}
+
+@media (min-width:768px) {
+    /* section.container,  */
+    div.album>div.container, footer>div.container {
+        max-width: 720px
+    }
+}
+
+@media (min-width:992px) {
+    /* section.container,  */
+    div.album>div.container, footer>div.container {
+        max-width: 960px
+    }
+}
+
+@media (min-width:1200px) {
+    /* section.container,  */
+    div.album>div.container, footer>div.container {
+        max-width: 1140px
+    }
+}
+
+@media (min-width:1400px) {
+    /* section.container,  */
+    div.album>div.container, footer>div.container {
+        max-width: 1320px
+    }
+}

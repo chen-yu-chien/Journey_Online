@@ -8,6 +8,32 @@ section.container, div.album>div.container, footer>div.container {
     background-color: rgba(255, 255, 255, 0.655);
 }
 
+.photos, #add_photo {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+}
+
+.photos:hover, #add_photo:hover {
+    transition: transform 0.2s ease-in-out;
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.modal-footer {
+    justify-content: flex-start;
+    padding: 16px;
+}
+
+.btn-outline-info {
+    --bs-btn-hover-color: white;
+    --bs-btn-active-color: white;
+}
+
+i {
+    font-size: 4rem;
+}
+
 @media (min-width:576px) {
     /* section.container,  */
     div.album>div.container, footer>div.container {

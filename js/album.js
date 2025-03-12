@@ -41,7 +41,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
   var img = document.createElement('img');
   img.className = 'card-img-top photos';
   img.src = URL.createObjectURL(file);
-  img.style.objectPosition = '50% 30%';
+  img.style.objectPosition = 'center';
   img.setAttribute('data-bs-toggle', 'modal');
 
   var cardBody = document.createElement('div');
@@ -49,7 +49,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
 
   var cardContent = document.createElement('p');
   cardContent.id = `content_${elementCount}`;
-  cardContent.className = 'card-text';
+  cardContent.className = 'card-text text-truncate';
   cardContent.innerText = '紀錄一下～';
 
   img.setAttribute('onclick', `photoClicked('${file.name}', '${cardContent.id}')`);

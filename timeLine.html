@@ -37,13 +37,13 @@
     }
 
     a#top {
+      color: rgb(154, 255, 154);
+    }
+
+    a#top:hover {
       color: #b9fab9;
     }
-    
-    a#top:hover{
-      color: lightgreen;
-    }
-    
+
     @media (min-width: 768px) {
       .bd-placeholder-img-lg {
         font-size: 3.5rem;
@@ -112,13 +112,11 @@
     /* .bd-mode-toggle .dropdown-menu .active .bi {
       display: block !important;
     } */
-    
   </style>
 
 </head>
 
 <body>
-  <!-- <div id="viewModal" class="modal show d-block" tabindex="-1"> -->
   <div id="viewModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content" style="height: 90vh;">
@@ -129,17 +127,17 @@
         <div class="modal-body d-flex flex-column pb-1 px-4">
           <p class="border-bottom d-flex align-items-center" style="height: 40px;">
             日期：<span id="date"></span>
-            <input type="date" id="datePicker" style="display: none;">
+            <input type="date" id="datePicker">
           </p>
           <p style="height: 100%;">
             <span id="text" class="border-bottom">11111</span>
-            <textarea id="text_edit" style="display: none;"></textarea>
+            <textarea id="text_edit"></textarea>
           </p>
         </div>
         <div id="modal_footer" class="modal-footer text-break">
-          <button id="btn_cancel" type="button" class="btn btn-secondary" style="display: none;">取消</button>
-          <button id="btn_save" type="button" class="btn btn-primary" style="display: none;">確認</button>
-          <button id="btn_edit" type="button" class="btn btn-info text-white" onclick="editClicked()">編輯內容</button>        
+          <button id="btn_cancel" type="button" class="btn btn-secondary">取消</button>
+          <button id="btn_save" type="button" class="btn btn-primary">確認</button>
+          <button id="btn_edit" type="button" class="btn btn-info text-white">編輯內容</button>
         </div>
       </div>
     </div>
@@ -150,7 +148,7 @@
       <div class="col-md-3 mb-2 mb-md-0">
         <div class="d-flex">
           <img id="logo" src="./img/logo.png">
-          <h4 id="title" class="align-self-center pt-2" >Journey</h4>
+          <h4 id="title" class="align-self-center pt-2">Journey</h4>
         </div>
       </div>
 
@@ -179,86 +177,98 @@
     </header>
   </div>
 
+  <div class="position-fixed end-0 mt-2 pr-2" style="margin-right: 8px;">
+    <button id="btn_new" type="button" class="btn d-flex align-items-center" style=" height: 50px; z-index: 100;"
+      onclick="newClicked()">
+      <i class="bi bi-plus" style="font-size: 2rem;"></i><span>新增日誌</span>
+    </button>
+  </div>
+
   <main>
-    <div id="background">
-      <!-- <div class="bg-info bg-opacity-50"> -->
-        <div class="timeline">
-          <div class="container">
-          <!-- <div class="container right"> -->
-            <div class="content">
-              <h2 class="subtitle">2024 July</h2>
-              <p id="content_1" class="border-bottom text-truncate content-day" data-bs-toggle="modal" onclick="contentClicked('content_1')">
-                <span class="text-secondary">2024/07/30</span>
-                <span>今天第一次去到了帝國糖廠，有上去裡面的觀景台看了一下，風景還挺不錯的，前面就是一個小小的湖泊，遠處看過去還能看到一班班火車行駛過去～</span>
-              </p>
-            </div>
+    <div id="background" style="min-height: 67vh;">
+      <div class="timeline" id="timeline">
+        <div class="container">
+          <div class="content">
+            <h2 class="subtitle">2024 July</h2>
+            <p id="content_1" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
+              onclick="contentClicked('content_1')">
+              <span class="text-secondary">2024/07/30</span>
+              <span>今天第一次去到了帝國糖廠，有上去裡面的觀景台看了一下，風景還挺不錯的，前面就是一個小小的湖泊，遠處看過去還能看到一班班火車行駛過去～</span>
+            </p>
           </div>
-          <div class="container">
-          <!-- <div class="container left"> -->
-            <div class="content">
-              <h2 class="subtitle">2024 August</h2>
-              <p class="border-bottom">content
-              </p>
-            </div>
+        </div>
+        <div class="container">
+          <div class="content">
+            <h2 class="subtitle">2024 August</h2>
+            <p id="content_2" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
+            onclick="contentClicked('content_2')">
+              <span class="text-secondary">2024/08/01</span>
+              <span>今天第一次去到了帝國糖廠，有上去裡面的觀景台看了一下，風景還挺不錯的，前面就是一個小小的湖泊，遠處看過去還能看到一班班火車行駛過去～</span>
+            </p>
           </div>
-          <div class="container">
-          <!-- <div class="container right"> -->
-            <div class="content">
-              <h2 class="subtitle">2024 September</h2>
-              <p class="border-bottom">content
-              </p>
-            </div>
+        </div>
+        <div class="container">
+          <div class="content">
+            <h2 class="subtitle">2024 October</h2>
+            <p id="content_3" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
+              onclick="contentClicked('content_4')">
+              <span class="text-secondary">2024/10/01</span>
+              <span>今天第一次去到了帝國糖廠，有上去裡面的觀景台看了一下，風景還挺不錯的，前面就是一個小小的湖泊，遠處看過去還能看到一班班火車行駛過去～</span>
+            </p>
           </div>
-          <div class="container">
-          <!-- <div class="container left"> -->
-            <div class="content">
-              <h2 class="subtitle">2024 October</h2>
-              <p class="border-bottom">content
-              </p>
-            </div>
+        </div>
+        <div class="container">
+          <div class="content">
+            <h2 class="subtitle">2024 November</h2>
+            <p id="content_4" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
+              onclick="contentClicked('content_5')">
+              <span class="text-secondary">2024/11/01</span>
+              <span>今天第一次去到了帝國糖廠，有上去裡面的觀景台看了一下，風景還挺不錯的，前面就是一個小小的湖泊，遠處看過去還能看到一班班火車行駛過去～</span>
+            </p>
           </div>
-          <div class="container">
-          <!-- <div class="container right"> -->
-            <div class="content">
-              <h2 class="subtitle">2024 November</h2>
-              <p class="border-bottom">content
-              </p>
-            </div>
+        </div>
+        <div class="container">
+          <div class="content">
+            <h2 class="subtitle">2024 December</h2>
+            <p id="content_5" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
+              onclick="contentClicked('content_6')">
+              <span class="text-secondary">2024/12/01</span>
+              <span>今天第一次去到了帝國糖廠，有上去裡面的觀景台看了一下，風景還挺不錯的，前面就是一個小小的湖泊，遠處看過去還能看到一班班火車行駛過去～</span>
+            </p>
           </div>
-          <div class="container">
-          <!-- <div class="container left"> -->
-            <div class="content">
-              <h2 class="subtitle">2024 December</h2>
-              <p class="border-bottom">content
-              </p>
-            </div>
+        </div>
+        <div class="container">
+          <div class="content">
+            <h2 class="subtitle">2025 January</h2>
+            <p id="content_6" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
+              onclick="contentClicked('content_7')">
+                            <span class="text-secondary">2025/01/01</span>
+              <span>今天第一次去到了帝國糖廠，有上去裡面的觀景台看了一下，風景還挺不錯的，前面就是一個小小的湖泊，遠處看過去還能看到一班班火車行駛過去～</span>
+            </p>
           </div>
-          <div class="container">
-          <!-- <div class="container right"> -->
-            <div class="content">
-              <h2 class="subtitle">2025 January</h2>
-              <p class="border-bottom">content
-              </p>
-            </div>
+        </div>
+        <div class="container">
+          <div class="content">
+            <h2 class="subtitle">2025 February</h2>
+            <p id="content_7" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
+              onclick="contentClicked('content_8')">
+                            <span class="text-secondary">2025/02/01</span>
+              <span>今天第一次去到了帝國糖廠，有上去裡面的觀景台看了一下，風景還挺不錯的，前面就是一個小小的湖泊，遠處看過去還能看到一班班火車行駛過去～</span>
+            </p>
           </div>
-          <div class="container">
-          <!-- <div class="container left"> -->
-            <div class="content">
-              <h2 class="subtitle">2025 February</h2>
-              <p class="border-bottom">content
-              </p>
-            </div>
-          </div>
-          <div class="container">
-          <!-- <div class="container right"> -->
-            <div class="content">
-              <h2 class="subtitle">2025 March</h2>
-              <p class="border-bottom">content
-              </p>
-            </div>
+        </div>
+        <div class="container">
+          <div class="content">
+            <h2 class="subtitle">2025 March</h2>
+            <p id="content_8" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
+              onclick="contentClicked('content_9')">
+                            <span class="text-secondary">2025/03/01</span>
+              <span>今天第一次去到了帝國糖廠，有上去裡面的觀景台看了一下，風景還挺不錯的，前面就是一個小小的湖泊，遠處看過去還能看到一班班火車行駛過去～</span>
+            </p>
           </div>
         </div>
       </div>
+    </div>
   </main>
 
   <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
@@ -268,23 +278,49 @@
   <footer class="text-body-secondary py-5">
     <div class="container bg-white">
       <p class="mb-1">&copy; 2025 Yu-Chien</p>
-      <p class="mb-1">Album template reference from <a href="https://getbootstrap.com/docs/5.3/examples/">Bootstrap Official Website, Examples</a>.</p>
-      </div>
+      <p class="mb-1">Album template reference from <a href="https://getbootstrap.com/docs/5.3/examples/">Bootstrap
+          Official Website, Examples</a>.</p>
+    </div>
   </footer>
 
   <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
   <script src="./js/timeline.js"></script>
 
   <script>
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+    window.onload = function () {
+      var elementList = document.getElementsByClassName("subtitle");
+      var year_month_list = [];
+      for (let i = 0; i < elementList.length; i++) {
+        year_month_list.push(elementList[i].innerText);
+      }
 
-    document.querySelectorAll("path").forEach(path => {
-      path.addEventListener("click", function () {
-        alert("你點擊了 " + this.id);
+      // console.log(year_month_list);
+      ymList = formatYMList(year_month_list);
+      // console.log(ymList);
+    }
+
+    function formatYMList(inputList) {
+      var result = [];
+      var year, month_str, month_num;
+      //   var monthDict = {"January": '01', "February": '02', "March": '03', "April": '04', "May": '05', "June": '06', "July": '07',
+      //      "August": '08', "September": '09',"October": '10', "November": '11', "December": '12'};
+
+      inputList.forEach(element => {
+        year = element.split(" ")[0];
+        month = element.split(" ")[1];
+
+        result.push(year + monthDict[month]);
       });
+
+      return result;
+    }
+
+    document.getElementById("datePicker").addEventListener("change", function () {
+      console.log(datePicker.value, typeof datePicker.value);
     });
+
   </script>
+
 </body>
 
 </html>

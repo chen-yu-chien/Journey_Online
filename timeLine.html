@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="./css/headers.css">
     <link rel="stylesheet" href="./css/timeLine.css">
+    <link rel="stylesheet" href="../css/modals.css">
 
     <style>
         .bd-placeholder-img {
@@ -138,6 +139,25 @@
                     <button id="btn_cancel" type="button" class="btn btn-secondary">取消</button>
                     <button id="btn_save" type="button" class="btn btn-primary">確認</button>
                     <button id="btn_edit" type="button" class="btn btn-info text-white">編輯內容</button>
+                    <button id="btn_delete" type="button" class="btn btn-info text-white">刪除日誌</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-sheet" tabindex="-1" role="dialog" id="deleteModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-3 shadow">
+                <div class="modal-body p-4 text-center" style="background-image: none;">
+                    <h5 class="mb-2">刪除相片</h5>
+                    <p class="mb-0">是否確定刪除相片及紀錄內容？</p>
+                </div>
+                <div class="modal-footer flex-nowrap p-0">
+                    <button id="del_no" type="button"
+                        class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
+                        data-bs-dismiss="modal">取消</button>
+                    <button id="del_yes" type="button"
+                        class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0">確認</button>
                 </div>
             </div>
         </div>

@@ -24,6 +24,8 @@ function contentClicked(contentId) {
     btn_save.setAttribute('style', 'display: none');
     btn_edit.setAttribute('style', 'display: inline');
     btn_edit.setAttribute('onclick', 'editClicked()');
+    btn_delete.setAttribute('style', 'display: inline');
+    btn_delete.setAttribute('onclick', `deleteClicked()`);
 
 
     // console.log(document.getElementById(contentId).childNodes)
@@ -43,6 +45,7 @@ function editClicked() {
     document.getElementById("text").setAttribute("style", "display: none");
     document.getElementById("text_edit").setAttribute("style", "display: inline; width: 100%; height: 100%; resize: none; wrap: hard;");
     document.getElementById("btn_edit").setAttribute("style", "display: none");
+    document.getElementById("btn_delete").setAttribute("style", "display: none");
     document.getElementById("btn_save").setAttribute("style", "display: inline-block");
     document.getElementById("btn_cancel").setAttribute("style", "display: inline-block");
 
@@ -55,6 +58,32 @@ function editClicked() {
 
     btn_save.setAttribute('onclick', `saveClicked()`);
     btn_cancel.setAttribute('onclick', `cancelClicked()`);
+}
+
+function deleteClicked() {
+    var parent = document.getElementById(editContentId).parentElement
+    var grand = parent.parentElement
+    var del_year = parent.getElementsByTagName('h2')[0].innerText.split(' ')[0];
+    var del_month = monthDict[parent.getElementsByTagName('h2')[0].innerText.split(' ')[1]];
+    var deleteYM = del_year + del_month;
+
+    deleteModal.className += " d-flex align-items-center ";
+    del_no.onclick = function () {
+        deleteModal.className = "modal modal-sheet";
+    }
+    del_yes.onclick = function () {
+        document.getElementById(editContentId).remove();
+        deleteModal.className = "modal modal-sheet";
+        viewModal.hide();
+
+        if (parent.getElementsByTagName('p').length <= 0) {
+            grand.remove();
+            console.log(deleteYM)
+            var index = ymList.indexOf(deleteYM);
+            ymList.splice(index, 1);
+            console.log(ymList)
+        }
+    }
 }
 
 function cancelClicked() {
@@ -99,6 +128,7 @@ function newClicked() {
     btn_save.setAttribute('onclick', 'newSaveClicked()');
     btn_save.setAttribute('style', 'display: inline');
     btn_edit.setAttribute('style', 'display: none');
+    btn_delete.setAttribute('style', 'display: none');
 
     viewModal.show();
 }

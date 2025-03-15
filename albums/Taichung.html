@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
   <link rel="stylesheet" href="../css/headers.css">
   <link rel="stylesheet" href="../css/album.css">
+  <link rel="stylesheet" href="../css/modals.css">
 
   <style>
     .bd-placeholder-img {
@@ -85,6 +86,21 @@
     </div>
   </div>
 
+  <div class="modal modal-sheet" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-3 shadow">
+        <div class="modal-body p-4 text-center">
+          <h5 class="mb-2">刪除相片</h5>
+          <p class="mb-0">是否確定刪除相片及紀錄內容？</p>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+          <button id="del_no" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" data-bs-dismiss="modal">取消</button>
+          <button id="del_yes" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" >確認</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-4">
       <div class="col-md-3 mb-2 mb-md-0">
@@ -132,7 +148,7 @@
     <div class="album py-5 bg-body-tertiary">
       <div class="container bg-body-tertiary">
         <div id="album" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          <div class="col">
+          <div id="col_1" class="col">
             <div class="card shadow-sm">
               <img src="../img/photos/taichung_30.jpg" class="card-img-top photos" style="object-position: 50% 30%;"
                 data-bs-toggle="modal" onclick="photoClicked('taichung_30.jpg', 'content_1')">
@@ -142,6 +158,8 @@
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" 
                       onclick="editClicked('content_1')">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" 
+                      onclick="deleteClicked('col_1')">Delete</button>
                   </div>
                   <small class="text-body-secondary">2024/07/30</small>
                 </div>
@@ -162,7 +180,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" 
-                      onclick="editClicked('content_1')">Edit</button>
+                      onclick="editClicked('content_1')" style="visibility: hidden;">Edit</button>
                   </div>
                   <small id="newDate" class="text-body-secondary">2024/07/30</small>
                 </div>
@@ -189,15 +207,18 @@
 
   <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
   <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
+  <script src="../js/album.js"></script>
 
   <script>
     window.onload = function() {
-      document.getElementById("newDate").innerText = new Date().getFullYear() + '/' + (new Date().getUTCMonth() + 1) +
-         '/' + new Date().getDate();
+      var year = new Date().getFullYear();
+      var month = (new Date().getUTCMonth() + 1) < 10 ? '0' + (new Date().getUTCMonth() + 1) : (new Date().getUTCMonth() + 1);
+      var date = new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate();
+
+      document.getElementById("newDate").innerText = year + '/' + month + '/' + date;
     }
   </script>
 
-  <script src="../js/album.js"></script>
 </body>
 
 </html>

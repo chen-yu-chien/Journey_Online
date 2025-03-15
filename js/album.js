@@ -22,6 +22,18 @@ function saveContent(contentId) {
   editModal.hide();
 }
 
+function deleteClicked(deleteId) {
+  deleteModal.className += " d-flex align-items-center ";
+  del_no.onclick = function () {
+    deleteModal.className = "modal modal-sheet";
+  }
+  del_yes.onclick = function () {
+    document.getElementById(deleteId).remove();
+    deleteModal.className = "modal modal-sheet";
+  }
+  
+}
+
 document.getElementById('fileInput').addEventListener('change', function(event) {
   var file = event.target.files[0];
   var album = document.getElementById('album');
@@ -33,6 +45,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
   }
 
   var photoCol = document.createElement('div');
+  photoCol.id = `col_${elementCount}`;
   photoCol.className = 'col';
 
   var photoCard = document.createElement('div');
@@ -65,12 +78,19 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
   editBtn.setAttribute('data-bs-toggle', 'modal');
   editBtn.setAttribute('onclick', `editClicked('${cardContent.id}')`);
   editBtn.innerText = 'Edit';
-
+  
+  var deleteBtn = document.createElement('button');
+  deleteBtn.className = 'btn btn-sm btn-outline-info';
+  deleteBtn.setAttribute('data-bs-toggle', 'modal');
+  deleteBtn.setAttribute('onclick', `deleteClicked('${photoCol.id}')`);
+  deleteBtn.innerText = 'Delete';
+  
   var date = document.createElement('small');
   date.className = 'text-body-secondary';
   date.innerText = document.getElementById('newDate').innerText;
 
   btnGroup.appendChild(editBtn);
+  btnGroup.appendChild(deleteBtn);
   cardFooter.appendChild(btnGroup);
   cardFooter.appendChild(date);
   cardBody.appendChild(cardContent);

@@ -34,6 +34,12 @@ i {
     font-size: 4rem;
 }
 
+.btn[id^="del"]:hover {
+    background-color: var(--bs-primary);
+    color: white;
+    font-weight: bold;
+}
+
 @media (min-width:576px) {
     /* section.container,  */
     div.album>div.container, footer>div.container {

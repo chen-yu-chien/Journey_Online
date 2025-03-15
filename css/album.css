@@ -1,4 +1,6 @@
-section.container, div.album>div.container, footer>div.container {
+section.container,
+div.album>div.container,
+footer>div.container {
     height: auto;
     position: static;
     box-shadow: none;
@@ -8,13 +10,15 @@ section.container, div.album>div.container, footer>div.container {
     background-color: rgba(255, 255, 255, 0.742);
 }
 
-.photos, #add_photo {
+.photos,
+#add_photo {
     width: 100%;
     height: 225px;
     object-fit: cover;
 }
 
-.photos:hover, #add_photo:hover {
+.photos:hover,
+#add_photo:hover {
     transition: transform 0.2s ease-in-out;
     transform: scale(1.02);
     cursor: pointer;
@@ -41,36 +45,46 @@ i {
 }
 
 @media (min-width:576px) {
+
     /* section.container,  */
-    div.album>div.container, footer>div.container {
+    div.album>div.container,
+    footer>div.container {
         max-width: 540px
     }
 }
 
 @media (min-width:768px) {
+
     /* section.container,  */
-    div.album>div.container, footer>div.container {
+    div.album>div.container,
+    footer>div.container {
         max-width: 720px
     }
 }
 
 @media (min-width:992px) {
+
     /* section.container,  */
-    div.album>div.container, footer>div.container {
+    div.album>div.container,
+    footer>div.container {
         max-width: 960px
     }
 }
 
 @media (min-width:1200px) {
+
     /* section.container,  */
-    div.album>div.container, footer>div.container {
+    div.album>div.container,
+    footer>div.container {
         max-width: 1140px
     }
 }
 
 @media (min-width:1400px) {
+
     /* section.container,  */
-    div.album>div.container, footer>div.container {
+    div.album>div.container,
+    footer>div.container {
         max-width: 1320px
     }
 }

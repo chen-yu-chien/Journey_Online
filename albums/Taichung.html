@@ -2,124 +2,128 @@
 <html lang="en" data-bs-theme="auto">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.122.0">
-  <title>Album</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>Album</title>
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
-  <link rel="stylesheet" href="../css/headers.css">
-  <link rel="stylesheet" href="../css/album.css">
-  <link rel="stylesheet" href="../css/modals.css">
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bootstrap-5.3.3-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../css/headers.css">
+    <link rel="stylesheet" href="../css/album.css">
+    <link rel="stylesheet" href="../css/modals.css">
 
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
 
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
 
-    section {
-      background-image: url(../img/taichung.jpg);
-      background-size: cover;
-      background-position: center;
-    }
+        section {
+            background-image: url(../img/taichung.jpg);
+            background-size: cover;
+            background-position: center;
+        }
 
-    a#top {
-      color: #b9fab9;
-    }
-    
-    a#top:hover{
-      color: lightgreen;
-    }
-  </style>
+        a#top {
+            color: #b9fab9;
+        }
+
+        a#top:hover {
+            color: lightgreen;
+        }
+    </style>
 
 
 </head>
 
 <body>
-  <div id="photoModal" class="modal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">照片</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div id="photoModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">照片</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="photo_show" src="" class="card-img-top">
+                </div>
+                <div id="modal_footer" class="modal-footer text-break"></div>
+            </div>
         </div>
-        <div class="modal-body">
-          <img id="photo_show" src="" class="card-img-top">
-        </div>
-        <div id="modal_footer" class="modal-footer text-break"></div>
-      </div>
     </div>
-  </div>
 
-  <div id="editModal" class="modal" tabindex="-1" data-bs-backdrop="static">
-    <div class="modal-dialog">
-      <div class="modal-content" style="height: 90vh;">
-        <div class="modal-header">
-          <h5 class="modal-title">文字內容編輯</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div id="editModal" class="modal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content" style="height: 90vh;">
+                <div class="modal-header">
+                    <h5 class="modal-title">文字內容編輯</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="edit_content" style="width: 100%; height: 100%; resize: none;"></textarea>
+                </div>
+                <div id="modal_footer" class="modal-footer">
+                    <button id="btn_cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button id="btn_save" type="button" class="btn btn-primary">確認</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <textarea id="edit_content" style="width: 100%; height: 100%; resize: none;"></textarea>
-        </div>
-        <div id="modal_footer" class="modal-footer">
-          <button id="btn_cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-          <button id="btn_save" type="button" class="btn btn-primary">確認</button>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <div class="modal modal-sheet" tabindex="-1" role="dialog" id="deleteModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content rounded-3 shadow">
-        <div class="modal-body p-4 text-center">
-          <h5 class="mb-2">刪除相片</h5>
-          <p class="mb-0">是否確定刪除相片及紀錄內容？</p>
+    <div class="modal modal-sheet" tabindex="-1" role="dialog" id="deleteModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-3 shadow">
+                <div class="modal-body p-4 text-center">
+                    <h5 class="mb-2">刪除相片</h5>
+                    <p class="mb-0">是否確定刪除相片及紀錄內容？</p>
+                </div>
+                <div class="modal-footer flex-nowrap p-0">
+                    <button id="del_no" type="button"
+                        class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"
+                        data-bs-dismiss="modal">取消</button>
+                    <button id="del_yes" type="button"
+                        class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0">確認</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-footer flex-nowrap p-0">
-          <button id="del_no" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" data-bs-dismiss="modal">取消</button>
-          <button id="del_yes" type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" >確認</button>
-        </div>
-      </div>
     </div>
-  </div>
-  
-  <div class="container">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-4">
-      <div class="col-md-3 mb-2 mb-md-0">
-        <div class="d-flex">
-          <img id="logo" src="../img/logo.png">
-          <h4 id="title" class="align-self-center pt-2">Journey</h4>
-        </div>
-      </div>
 
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 nav-pills">
-        <li class="nav-item"><a href="../county.html" class="nav-link active px-3" aria-current="page">County</a></li>
-        <li class="nav-item"><a href="../timeLine.html" class="nav-link px-3">TimeLine</a></li>
-      </ul>
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-4">
+            <div class="col-md-3 mb-2 mb-md-0">
+                <div class="d-flex">
+                    <img id="logo" src="../img/logo.png">
+                    <h4 id="title" class="align-self-center pt-2">Journey</h4>
+                </div>
+            </div>
 
-      <div class="col-md-3 text-end">
-        <!-- <button type="button" class="btn btn-outline-primary me-2">Login</button>
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 nav-pills">
+                <li class="nav-item"><a href="../county.html" class="nav-link active px-3"
+                        aria-current="page">County</a></li>
+                <li class="nav-item"><a href="../timeLine.html" class="nav-link px-3">TimeLine</a></li>
+            </ul>
+
+            <div class="col-md-3 text-end">
+                <!-- <button type="button" class="btn btn-outline-primary me-2">Login</button>
         <button type="button" class="btn btn-primary">Sign-up</button> -->
-        <!-- 使用者頭像 -->
-        <!-- <div class="dropdown text-end">
+                <!-- 使用者頭像 -->
+                <!-- <div class="dropdown text-end">
           <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
           </a>
@@ -131,93 +135,96 @@
             <li><a class="dropdown-item" href="#">Sign out</a></li>
           </ul>
         </div> -->
-      </div>
-    </header>
-  </div>
-
-  <main>
-    <section class="py-5 text-center container bg-white">
-      <div class="row py-lg-4 my-5 bg-title">
-        <div class="col-lg-6 col-md-8 mx-auto">
-          <h1 class="fw-light" style="font-family: 'Times New Roman', Times, cursive;">臺中市</h1>
-          <p class="lead pt-3" style="font-family: 'Times New Roman', Times, cursive;">~ ~ ~ 記憶裡的台中，是家鄉，也是旅遊天堂 🏡~ ~ ~</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="album py-5 bg-body-tertiary">
-      <div class="container bg-body-tertiary">
-        <div id="album" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          <div id="col_1" class="col">
-            <div class="card shadow-sm">
-              <img src="../img/photos/taichung_30.jpg" class="card-img-top photos" style="object-position: 50% 30%;"
-                data-bs-toggle="modal" onclick="photoClicked('taichung_30.jpg', 'content_1')">
-              <div class="card-body">
-                <p id="content_1" class="card-text text-truncate">台中 Lalaport 旁邊的帝國糖廠，觀景台視野真好～</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" 
-                      onclick="editClicked('content_1')">Edit</button>
-                    <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" 
-                      onclick="deleteClicked('col_1')">Delete</button>
-                  </div>
-                  <small class="text-body-secondary">2024/07/30</small>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="col">
-            <div class="card shadow-sm">
-              <label for="fileInput">
-                <div id="add_photo" class="card-img-top d-flex" style="flex-wrap: wrap; justify-content: center; 
+        </header>
+    </div>
+
+    <main>
+        <section class="py-5 text-center container bg-white">
+            <div class="row py-lg-4 my-5 bg-title">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light" style="font-family: 'Times New Roman', Times, cursive;">臺中市</h1>
+                    <p class="lead pt-3" style="font-family: 'Times New Roman', Times, cursive;">~ ~ ~ 記憶裡的台中，是家鄉，也是旅遊天堂
+                        🏡~ ~ ~</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-body-tertiary">
+            <div class="container bg-body-tertiary">
+                <div id="album" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <div id="col_1" class="col">
+                        <div class="card shadow-sm">
+                            <img src="../img/photos/taichung_30.jpg" class="card-img-top photos"
+                                style="object-position: 50% 30%;" data-bs-toggle="modal"
+                                onclick="photoClicked('taichung_30.jpg', 'content_1')">
+                            <div class="card-body">
+                                <p id="content_1" class="card-text text-truncate">台中 Lalaport 旁邊的帝國糖廠，觀景台視野真好～</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            onclick="editClicked('content_1')">Edit</button>
+                                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            onclick="deleteClicked('col_1')">Delete</button>
+                                    </div>
+                                    <small class="text-body-secondary">2024/07/30</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <label for="fileInput">
+                                <div id="add_photo" class="card-img-top d-flex" style="flex-wrap: wrap; justify-content: center; 
                   align-content: center; background-color: var(--bs-secondary-bg);">
-                  <i class="bi bi-plus-circle" style="color: var(--bs-tertiary-color);"></i>
+                                    <i class="bi bi-plus-circle" style="color: var(--bs-tertiary-color);"></i>
+                                </div>
+                            </label>
+                            <input type="file" id="fileInput" style="opacity: 0; position: fixed;">
+                            <div class="card-body">
+                                <p id="content_1" class="card-text" style="color: var(--bs-tertiary-color);">紀錄一下～</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            onclick="editClicked('content_1')" style="visibility: hidden;">Edit</button>
+                                    </div>
+                                    <small id="newDate" class="text-body-secondary">2024/07/30</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </label>
-              <input type="file" id="fileInput" style="opacity: 0; position: fixed;">
-              <div class="card-body">
-                <p id="content_1" class="card-text" style="color: var(--bs-tertiary-color);">紀錄一下～</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" 
-                      onclick="editClicked('content_1')" style="visibility: hidden;">Edit</button>
-                  </div>
-                  <small id="newDate" class="text-body-secondary">2024/07/30</small>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
+
+    </main>
+
+    <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+        <a id="top" href="#"><i class="bi bi-arrow-up-circle-fill"></i></a>
     </div>
 
-  </main>
+    <footer class="text-body-secondary py-5">
+        <div class="container bg-white">
+            <p class="mb-1">&copy; 2025 Yu-Chien</p>
+            <p class="mb-1">Album template reference from <a
+                    href="https://getbootstrap.com/docs/5.3/examples/">Bootstrap
+                    Official Website, Examples</a>.</p>
+        </div>
+    </footer>
 
-  <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-    <a id="top" href="#"><i class="bi bi-arrow-up-circle-fill"></i></a>
-  </div>
+    <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
+    <script src="../js/album.js"></script>
 
-  <footer class="text-body-secondary py-5">
-    <div class="container bg-white">
-      <p class="mb-1">&copy; 2025 Yu-Chien</p>
-      <p class="mb-1">Album template reference from <a href="https://getbootstrap.com/docs/5.3/examples/">Bootstrap
-          Official Website, Examples</a>.</p>
-    </div>
-  </footer>
+    <script>
+        window.onload = function () {
+            var year = new Date().getFullYear();
+            var month = (new Date().getUTCMonth() + 1) < 10 ? '0' + (new Date().getUTCMonth() + 1) : (new Date().getUTCMonth() + 1);
+            var date = new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate();
 
-  <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../bootstrap-5.3.3-dist/js/bootstrap.bundle.js"></script>
-  <script src="../js/album.js"></script>
-
-  <script>
-    window.onload = function() {
-      var year = new Date().getFullYear();
-      var month = (new Date().getUTCMonth() + 1) < 10 ? '0' + (new Date().getUTCMonth() + 1) : (new Date().getUTCMonth() + 1);
-      var date = new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate();
-
-      document.getElementById("newDate").innerText = year + '/' + month + '/' + date;
-    }
-  </script>
+            document.getElementById("newDate").innerText = year + '/' + month + '/' + date;
+        }
+    </script>
 
 </body>
 

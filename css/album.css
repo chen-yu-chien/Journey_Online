@@ -44,6 +44,10 @@ i {
     font-weight: bold;
 }
 
+section.container {
+    height: 60vh;
+}
+
 @media (min-width:576px) {
 
     /* section.container,  */

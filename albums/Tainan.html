@@ -75,8 +75,13 @@
                     <h5 class="modal-title">文字內容編輯</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <textarea id="edit_content" name="" style="width: 100%; height: 100%; resize: none;"></textarea>
+                <div class="modal-body d-flex flex-column pb-1 px-4">
+                    <p class="border-bottom d-flex align-items-center" style="height: 40px;">
+                        日期：<input type="date" id="datePicker">
+                    </p>
+                    <p style="height: 100%;">
+                        <textarea id="edit_content" style="display: inline; width: 100%; height: 100%; resize: none; wrap: hard;"></textarea>
+                    </p>
                 </div>
                 <div id="modal_footer" class="modal-footer">
                     <button id="btn_cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>

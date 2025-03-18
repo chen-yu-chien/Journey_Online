@@ -12,14 +12,25 @@ function photoClicked(photoName, contentId) {
 }
 
 function editClicked(contentId) {
+    var photoCol = document.getElementById(`col_${contentId.split('_')[1]}`);
+    var date = photoCol.getElementsByTagName("small")[0].innerText;
+    var format_date = dateFormat(date);
+    document.getElementById("datePicker").value = format_date;
+
     document.getElementById("edit_content").value = document.getElementById(contentId).innerText;
     document.getElementById("btn_save").setAttribute('onclick', `saveContent('${contentId}')`);
     editModal.show();
 }
 
 function saveContent(contentId) {
+    var photoCol = document.getElementById(`col_${contentId.split('_')[1]}`);
+    photoCol.getElementsByTagName("small")[0].innerText = document.getElementById("datePicker").value.split('-').join('/');
     document.getElementById(contentId).innerText = document.getElementById("edit_content").value;
     editModal.hide();
+
+    // photoCol.id = `${photoCol.id}_edit`;
+    // document.getElementById(`col_${contentId.split('_')[1]}`).remove();
+    SortingPhotoCol(photoCol);
 }
 
 function deleteClicked(deleteId) {
@@ -100,4 +111,35 @@ document.getElementById('fileInput').addEventListener('change', function (event)
     photoCol.appendChild(photoCard);
 
     album.insertBefore(photoCol, album.childNodes[album.childNodes.length - 2]);
+    album.insertBefore(document.createTextNode('\n'), album.childNodes[album.childNodes.length - 2]);
 });
+
+function SortingPhotoCol(photoCol) {
+    var album = document.getElementById('album');
+    var elementCount = album.getElementsByTagName('small').length
+    var smallList = album.getElementsByTagName('small');
+    var newDate = photoCol.getElementsByTagName('small')[0].innerText.split('/').join('');
+    for (let i = 0; i < elementCount - 1; i++) {
+        var oldDate = smallList[i].innerText.split('/').join('');
+        if (newDate > oldDate) {
+            continue;
+        }
+        else {
+            album.insertBefore(photoCol, album.childNodes[i * 2]);
+            break;
+        }
+    }
+}
+
+function dateFormat(date) {
+    var year = date.split('/')[0];
+    var month = date.split('/')[1];
+
+    if (month.length == 1) {
+        month = '0' + month;
+    }
+
+    var day = date.split('/')[2];
+
+    return `${year}-${month}-${day}`;
+}

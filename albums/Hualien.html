@@ -152,6 +152,25 @@
         <div class="album py-5 bg-body-tertiary">
             <div class="container bg-body-tertiary">
                 <div id="album" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <div id="col_1" class="col">
+                        <div class="card shadow-sm">
+                            <img src="../img/photos/hualien_1.jpg" class="card-img-top photos"
+                                style="object-position: 50% 50%;" data-bs-toggle="modal"
+                                onclick="photoClicked('hualien_1.jpg', 'content_1')">
+                            <div class="card-body">
+                                <p id="content_1" class="card-text text-truncate">花蓮的海岸也很美，不過可惜的是今天沒有可愛的太陽公公出來露露臉...如果天氣好一點應該風景會更好吧</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            onclick="editClicked('content_1')">Edit</button>
+                                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                            onclick="deleteClicked('col_1')">Delete</button>
+                                    </div>
+                                    <small class="text-body-secondary">2023/02/06</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col">
                         <div class="card shadow-sm">
                             <label for="fileInput">

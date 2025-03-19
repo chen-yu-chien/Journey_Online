@@ -51,3 +51,8 @@
     font-style: normal;
     font-size: 3rem;
 }
+
+
+header div.dropdown {
+    width: 160px;
+}

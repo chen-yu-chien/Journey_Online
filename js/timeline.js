@@ -2,10 +2,6 @@ var viewModal = new bootstrap.Modal(document.getElementById('viewModal'), {
     keyboard: false
 });
 
-// var createModal = new bootstrap.Modal(document.getElementById('createModal'), {
-//   keyboard: false
-// });
-
 var editContentId, newDate, newContent;
 var monthDict = {
     "January": '01', "February": '02', "March": '03', "April": '04', "May": '05', "June": '06', "July": '07',
@@ -14,21 +10,10 @@ var monthDict = {
 var ymList = []; // 數字型態的年月資料
 
 function contentClicked(contentId) {
-    date.setAttribute('style', 'display: inline');
-    datePicker.setAttribute('style', 'display: none');
-
-    text.setAttribute('style', 'display: inline');
-    text_edit.setAttribute('style', 'display: none;');
-
-    btn_cancel.setAttribute('style', 'display: none');
-    btn_save.setAttribute('style', 'display: none');
-    btn_edit.setAttribute('style', 'display: inline');
+    btnDiplayChange('show');
     btn_edit.setAttribute('onclick', 'editClicked()');
-    btn_delete.setAttribute('style', 'display: inline');
     btn_delete.setAttribute('onclick', `deleteClicked()`);
 
-
-    // console.log(document.getElementById(contentId).childNodes)
     const content_date = document.getElementById(contentId).childNodes[1].innerText;
     const content_text = document.getElementById(contentId).childNodes[3].innerText;
 
@@ -40,14 +25,7 @@ function contentClicked(contentId) {
 }
 
 function editClicked() {
-    document.getElementById("date").setAttribute("style", "display: none");
-    document.getElementById("datePicker").setAttribute("style", "display: inline");
-    document.getElementById("text").setAttribute("style", "display: none");
-    document.getElementById("text_edit").setAttribute("style", "display: inline; width: 100%; height: 100%; resize: none; wrap: hard;");
-    document.getElementById("btn_edit").setAttribute("style", "display: none");
-    document.getElementById("btn_delete").setAttribute("style", "display: none");
-    document.getElementById("btn_save").setAttribute("style", "display: inline-block");
-    document.getElementById("btn_cancel").setAttribute("style", "display: inline-block");
+    btnDiplayChange('edit');
 
     var date = document.getElementById("date").innerText;
     var format_date = dateFormat(date);
@@ -87,11 +65,11 @@ function deleteClicked() {
 }
 
 function cancelClicked() {
-    btnDiplayChange();
+    btnDiplayChange('cancel');
 }
 
 function saveClicked() {
-    btnDiplayChange();
+    // btnDiplayChange('save');
     newDate = datePicker.value.split('-').join('/');
     date.innerText = newDate;
     document.getElementById(editContentId).childNodes[1].innerText = newDate;
@@ -99,7 +77,77 @@ function saveClicked() {
     newContent = text_edit.value;
     text.innerText = newContent;
     document.getElementById(editContentId).childNodes[3].innerText = newContent;
+
+    if (datePicker.value == '') {
+        alert('請選擇日期!');
+        return;
+    }
+    else {
+        var ym = formatYM(newDate);
+        var index = ymList.indexOf(ym);
+
+        if (ym && index < 0) {
+            var newYM = formatYM(newDate);
+            var newIndex;
+            for (let i = 0; i < ymList.length; i++) {
+                if (newYM < ymList[i]) {
+                    ymList.splice(i, 0, newYM);
+                    break;
+                }
+            }
+
+            if (ymList.indexOf(newYM) < 0) {
+                ymList.push(newYM);
+            }
+
+            newIndex = ymList.indexOf(newYM);
+            createContainer(newDate, newContent, newIndex);
+
+            const count = document.getElementById(editContentId).parentElement.getElementsByTagName('p').length;
+            document.getElementById(editContentId).remove();
+            var newParagraph = document.getElementById(`content_${count}`);
+            newParagraph.id = editContentId;
+        }
+        else if (ym && index >= 0) {
+            console.log('yes');
+            SortingParagraph()    
+        }
+        else {
+            alert('請選擇日期!');
+        }
+
+        btnDiplayChange('save');
+    }
 }
+
+function SortingParagraph() {
+    var content = document.getElementById(`${editContentId}`).parentElement;
+    var pElements = Array.from(content.getElementsByTagName('p'));
+    var h2Element = content.getElementsByTagName('h2')[0];
+    
+    pElements.forEach(element => {
+        console.log(element.id);
+    })
+
+    pElements.sort(function (pA, pB) {
+        var dateA = pA.getElementsByClassName('text-secondary')[0].innerText.split('/').join('');
+        var dateB = pB.getElementsByClassName('text-secondary')[0].innerText.split('/').join('');
+        return dateA - dateB;
+    })
+
+    content.innerHTML = '';
+    content.appendChild(document.createTextNode('\n'));
+    content.appendChild(h2Element);
+    content.appendChild(document.createTextNode('\n'));
+    
+    pElements.forEach(element => {
+        content.appendChild(element);
+        content.appendChild(document.createTextNode('\n'));
+    })
+
+    console.log(content.childNodes);
+}
+
 
 function btnDiplayChange() {
     document.getElementById("date").setAttribute("style", "display: inline");
@@ -114,21 +162,15 @@ function btnDiplayChange() {
 }
 
 function newClicked() {
-    date.setAttribute('style', 'display: none');
-    datePicker.setAttribute('style', 'display: inline');
+    btnDiplayChange('new');
     var createDate = new Date().toLocaleDateString();
     var format_createDate = dateFormat(createDate);
     document.getElementById("datePicker").value = format_createDate;
-
-    text.setAttribute('style', 'display: none');
-    text_edit.setAttribute('style', 'display: inline; width: 100%; height: 100%; resize: none; wrap: hard;');
+    
     text_edit.value = '';
+    
     btn_cancel.setAttribute('onclick', 'newCancelClicked()');
-    btn_cancel.setAttribute('style', 'display: inline');
     btn_save.setAttribute('onclick', 'newSaveClicked()');
-    btn_save.setAttribute('style', 'display: inline');
-    btn_edit.setAttribute('style', 'display: none');
-    btn_delete.setAttribute('style', 'display: none');
 
     viewModal.show();
 }
@@ -145,7 +187,6 @@ function newSaveClicked() {
     else {
         newDate = datePicker.value.split('-').join('/');
         newContent = text_edit.value;
-        // console.log(newDate, newContent);
         var ym = formatYM(newDate);
         console.log('ym ' + ym);
         console.log(ymList);
@@ -186,9 +227,6 @@ function newSaveClicked() {
 
 function createContainer(newDate, newContent, newIndex) {
     var timeline = document.getElementById('timeline');
-    var content_count = document.getElementsByClassName('content-day').length;
-
-    console.log('content_count:', content_count);
 
     var container = document.createElement('div');
     container.setAttribute('class', 'container');
@@ -200,23 +238,7 @@ function createContainer(newDate, newContent, newIndex) {
     subtitle.setAttribute('class', 'subtitle');
     subtitle.innerText = newDate.split('/')[0] + " " + getKeyByValue(monthDict, newDate.split('/')[1]);
 
-    var p = document.createElement('p');
-    p.setAttribute('id', `content_${content_count + 1}`);
-    p.setAttribute('class', 'border-bottom text-truncate content-day');
-    p.setAttribute('data-bs-toggle', 'modal');
-    p.setAttribute('onclick', `contentClicked("${p.id}")`);
-
-    var span1 = document.createElement('span');
-    span1.setAttribute('class', 'text-secondary');
-    span1.innerText = newDate;
-
-    var span2 = document.createElement('span');
-    span2.innerText = ' ' + newContent;
-
-    p.appendChild(document.createTextNode('\n'));
-    p.appendChild(span1);
-    p.appendChild(document.createTextNode('\n'));
-    p.appendChild(span2);
+    var p = createParagraph(newDate, newContent);
 
     content.appendChild(document.createTextNode('\n'));
     content.appendChild(subtitle);
@@ -225,9 +247,6 @@ function createContainer(newDate, newContent, newIndex) {
     content.appendChild(document.createTextNode('\n'));
 
     container.appendChild(content);
-
-    // console.log('p: ', p);
-    // console.log('container: ', container);
 
     if (newIndex < timeline.childNodes.length) {
         console.log('new index: ', newIndex);
@@ -240,9 +259,41 @@ function createContainer(newDate, newContent, newIndex) {
 }
 
 function createContent(newDate, newContent, index) {
-    var content_count = document.getElementsByClassName('content-day').length;
-
     var contentBlock = document.getElementsByClassName('content')[index];
+    var p = createParagraph(newDate, newContent);
+
+    for (let i = 0; i < contentBlock.getElementsByClassName('text-secondary').length; i++) {
+        var oldDate = contentBlock.getElementsByClassName('text-secondary')[i].innerText;
+        var insertIndex = 2 * i + 3;
+
+        if (i == contentBlock.getElementsByClassName('text-secondary').length - 1) {
+            if (newDate > oldDate) {
+                contentBlock.appendChild(p);
+                contentBlock.appendChild(document.createTextNode('\n'));
+            }
+            else {
+                contentBlock.insertBefore(p, contentBlock.childNodes[insertIndex]);
+                contentBlock.insertBefore(document.createTextNode('\n'), contentBlock.childNodes[insertIndex + 1]);
+            }
+            break;
+        }
+        else {
+            if (newDate > oldDate) {
+                continue;
+            }
+            else {
+                contentBlock.insertBefore(p, contentBlock.childNodes[insertIndex]);
+                contentBlock.insertBefore(document.createTextNode('\n'), contentBlock.childNodes[insertIndex + 1]);
+                break;
+            }
+        }
+
+    }
+
+}
+
+function createParagraph(newDate, newContent) {
+    var content_count = document.getElementsByClassName('content-day').length;
 
     var p = document.createElement('p');
     p.setAttribute('id', `content_${content_count + 1}`);
@@ -262,37 +313,53 @@ function createContent(newDate, newContent, index) {
     p.appendChild(document.createTextNode('\n'));
     p.appendChild(span2);
 
-    console.log(contentBlock.childNodes);
+    return p;
+}
 
-    for (let i = 0; i < contentBlock.getElementsByClassName('text-secondary').length; i++) {
-        var oldDate = contentBlock.getElementsByClassName('text-secondary')[i].innerText;
-        console.log('oldDate: ', oldDate);
-        var insertIndex = 2 * i + 3;
+function btnDiplayChange(trigger) {
+    switch (trigger) {
+        case 'show':
+            date.setAttribute('style', 'display: inline');
+            datePicker.setAttribute('style', 'display: none');
 
-        if (i == contentBlock.getElementsByClassName('text-secondary').length - 1) {
-            if (newDate > oldDate) {
-                contentBlock.appendChild(p);
-                contentBlock.appendChild(document.createTextNode('\n'));
-            }
-            else {
-                contentBlock.insertBefore(p, contentBlock.childNodes[insertIndex]);
-                contentBlock.insertBefore(document.createTextNode('\n'), contentBlock.childNodes[insertIndex + 1]);
-                console.log('1. insert before ' + i);
-            }
+            text.setAttribute('style', 'display: inline');
+            text_edit.setAttribute('style', 'display: none;');
+
+            btn_cancel.setAttribute('style', 'display: none');
+            btn_save.setAttribute('style', 'display: none');
+            btn_edit.setAttribute('style', 'display: inline');
+            btn_delete.setAttribute('style', 'display: inline');
+            console.log('show');
             break;
-        }
-        else {
-            if (newDate > oldDate) {
-                continue;
-            }
-            else {
-                contentBlock.insertBefore(p, contentBlock.childNodes[insertIndex]);
-                contentBlock.insertBefore(document.createTextNode('\n'), contentBlock.childNodes[insertIndex + 1]);
-                console.log('2. insert before ' + i);
-                break;
-            }
-        }
 
+        case 'new':
+        case 'edit':
+            date.setAttribute("style", "display: none");
+            datePicker.setAttribute("style", "display: inline");
+            text.setAttribute("style", "display: none");
+            text_edit.setAttribute("style", "display: inline; width: 100%; height: 100%; resize: none; wrap: hard;");
+            btn_edit.setAttribute("style", "display: none");
+            btn_delete.setAttribute("style", "display: none");
+            btn_save.setAttribute("style", "display: inline-block");
+            btn_cancel.setAttribute("style", "display: inline-block");
+
+            console.log('edit');
+            break;
+
+        case 'save':
+        case 'cancel':
+            date.setAttribute("style", "display: inline");
+            datePicker.setAttribute("style", "display: none");
+            text.setAttribute("style", "display: inline");
+            text_edit.setAttribute("style", "display: none");
+            btn_edit.setAttribute("style", "display: inline-block");
+            btn_save.setAttribute("style", "display: none");
+            btn_cancel.setAttribute("style", "display: none");
+            break;
+
+        default:
+            alert('無效按鍵')
+            break;
     }
 
 }

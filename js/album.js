@@ -27,10 +27,41 @@ function saveContent(contentId) {
     photoCol.getElementsByTagName("small")[0].innerText = document.getElementById("datePicker").value.split('-').join('/');
     document.getElementById(contentId).innerText = document.getElementById("edit_content").value;
     editModal.hide();
+    
+    SortingPhotoCol();
+}
 
-    // photoCol.id = `${photoCol.id}_edit`;
-    // document.getElementById(`col_${contentId.split('_')[1]}`).remove();
-    SortingPhotoCol(photoCol);
+function SortingPhotoCol() {
+    var album = document.getElementById('album');
+    var colElements = new Array();
+    var col_new = album.getElementsByClassName('col')[album.getElementsByClassName('col').length - 1];
+
+    for (let i = 0; i < album.getElementsByClassName('col').length - 1; i++) {
+        colElements.push(album.getElementsByClassName('col')[i]);
+    }
+
+    colElements.forEach(element => {
+        console.log(element.id);
+    })
+
+    colElements.sort(function (colA, colB) {
+        var dateA = colA.getElementsByTagName('small')[0].innerText.split('/').join('');
+        var dateB = colB.getElementsByTagName('small')[0].innerText.split('/').join('');
+        return dateA - dateB;
+    })
+
+    album.innerHTML = '';
+    album.appendChild(document.createTextNode('\n'));
+
+    colElements.forEach(element => {
+        album.appendChild(element);
+        album.appendChild(document.createTextNode('\n'));
+    })
+
+    album.appendChild(col_new);
+    album.appendChild(document.createTextNode('\n'));
+
+    console.log(album.childNodes);
 }
 
 function deleteClicked(deleteId) {
@@ -114,22 +145,22 @@ document.getElementById('fileInput').addEventListener('change', function (event)
     album.insertBefore(document.createTextNode('\n'), album.childNodes[album.childNodes.length - 2]);
 });
 
-function SortingPhotoCol(photoCol) {
-    var album = document.getElementById('album');
-    var elementCount = album.getElementsByTagName('small').length
-    var smallList = album.getElementsByTagName('small');
-    var newDate = photoCol.getElementsByTagName('small')[0].innerText.split('/').join('');
-    for (let i = 0; i < elementCount - 1; i++) {
-        var oldDate = smallList[i].innerText.split('/').join('');
-        if (newDate > oldDate) {
-            continue;
-        }
-        else {
-            album.insertBefore(photoCol, album.childNodes[i * 2]);
-            break;
-        }
-    }
-}
+// function SortingPhotoCol(photoCol) {
+//     var album = document.getElementById('album');
+//     var elementCount = album.getElementsByTagName('small').length
+//     var smallList = album.getElementsByTagName('small');
+//     var newDate = photoCol.getElementsByTagName('small')[0].innerText.split('/').join('');
+//     for (let i = 0; i < elementCount - 1; i++) {
+//         var oldDate = smallList[i].innerText.split('/').join('');
+//         if (newDate > oldDate) {
+//             continue;
+//         }
+//         else {
+//             album.insertBefore(photoCol, album.childNodes[i * 2]);
+//             break;
+//         }
+//     }
+// }
 
 function dateFormat(date) {
     var year = date.split('/')[0];

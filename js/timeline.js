@@ -104,9 +104,14 @@ function saveClicked() {
             createContainer(newDate, newContent, newIndex);
 
             const count = document.getElementById(editContentId).parentElement.getElementsByTagName('p').length;
+            const parentContainer = document.getElementById(editContentId).parentElement.parentElement;
             document.getElementById(editContentId).remove();
             var newParagraph = document.getElementById(`content_${count}`);
             newParagraph.id = editContentId;
+
+            if (parentContainer.getElementsByTagName('p').length < 1) {
+                parentContainer.remove();
+            }
         }
         else if (ym && index >= 0) {
             console.log('yes');

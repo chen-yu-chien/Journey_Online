@@ -11,8 +11,8 @@ var ymList = []; // 數字型態的年月資料
 
 function contentClicked(contentId) {
     btnDiplayChange('show');
-    btn_edit.setAttribute('onclick', `editClicked(${contentId})`);
-    btn_delete.setAttribute('onclick', `deleteClicked(${contentId})`);
+    btn_edit.setAttribute('onclick', `editClicked('${contentId}')`);
+    btn_delete.setAttribute('onclick', `deleteClicked('${contentId}')`);
 
     const content_date = document.getElementById(contentId).childNodes[1].innerText;
     const content_text = document.getElementById(contentId).childNodes[3].innerText;
@@ -33,7 +33,7 @@ function editClicked(contentId) {
     var content = document.getElementById("text").innerText;
     document.getElementById("text_edit").value = content;
 
-    btn_save.setAttribute('onclick', `saveClicked(${contentId})`);
+    btn_save.setAttribute('onclick', `saveClicked('${contentId}')`);
     btn_cancel.setAttribute('onclick', `cancelClicked()`);
 }
 
@@ -68,7 +68,6 @@ function cancelClicked() {
 }
 
 function saveClicked(contentId) {
-    // btnDiplayChange('save');
     newDate = datePicker.value.split('-').join('/');
     date.innerText = newDate;
     document.getElementById(contentId).childNodes[1].innerText = newDate;
@@ -233,6 +232,7 @@ function createContainer(newDate, newContent, newIndex) {
     var timeline = document.getElementById('timeline');
 
     var container = document.createElement('div');
+    container.id = `c_${newDate.split('/')[0] + '' + newDate.split('/')[1]}`;
     container.setAttribute('class', 'container');
 
     var content = document.createElement('div');
@@ -260,6 +260,22 @@ function createContainer(newDate, newContent, newIndex) {
         console.log('new index: ', newIndex);
         timeline.appendChild(container);
     }
+
+    insertMonthMenu(newDate, newIndex);
+}
+
+function insertMonthMenu(newDate, newIndex) {
+    var ul = document.getElementById('monthMenu').getElementsByTagName('ul')[0];
+    var new_li = document.createElement('li');
+    var new_a = document.createElement('a');
+    new_a.setAttribute('class', 'dropdown-item rounded-2');
+    new_a.setAttribute('href', `#c_${newDate.split('/')[0] + '' + newDate.split('/')[1]}`);
+    new_a.innerText = newDate.split('/')[0] + '/' + newDate.split('/')[1];
+    new_li.appendChild(new_a);
+
+    ul.insertBefore(new_li, ul.childNodes[2 * newIndex + 5])
+    ul.insertBefore(document.createTextNode('\n'), ul.childNodes[2 * newIndex + 6]);
+    console.log(ul.childNodes);
 }
 
 function createContent(newDate, newContent, index) {

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../css/headers.css">
     <link rel="stylesheet" href="../css/timeLine.css">
     <link rel="stylesheet" href="../css/modals.css">
+    <link rel="stylesheet" href="../css/dropdowns.css">
 
     <style>
         .bd-placeholder-img {
@@ -52,69 +53,6 @@
                 font-size: 3.5rem;
             }
         }
-
-        /* .b-example-divider {
-      width: 100%;
-      height: 3rem;
-      background-color: rgba(0, 0, 0, .1);
-      border: solid rgba(0, 0, 0, .15);
-      border-width: 1px 0;
-      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-    } */
-
-        /* .b-example-vr {
-      flex-shrink: 0;
-      width: 1.5rem;
-      height: 100vh;
-    } */
-
-        /* .bi {
-      vertical-align: -.125em;
-      fill: currentColor;
-    } */
-
-        /* .nav-scroller {
-      position: relative;
-      z-index: 2;
-      height: 2.75rem;
-      overflow-y: hidden;
-    } */
-
-        /* .nav-scroller .nav {
-      display: flex;
-      flex-wrap: nowrap;
-      padding-bottom: 1rem;
-      margin-top: -1px;
-      overflow-x: auto;
-      text-align: center;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-    } */
-
-        /* .btn-bd-primary {
-      --bd-violet-bg: #712cf9;
-      --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-      --bs-btn-font-weight: 600;
-      --bs-btn-color: var(--bs-white);
-      --bs-btn-bg: var(--bd-violet-bg);
-      --bs-btn-border-color: var(--bd-violet-bg);
-      --bs-btn-hover-color: var(--bs-white);
-      --bs-btn-hover-bg: #6528e0;
-      --bs-btn-hover-border-color: #6528e0;
-      --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-      --bs-btn-active-color: var(--bs-btn-hover-color);
-      --bs-btn-active-bg: #5a23c8;
-      --bs-btn-active-border-color: #5a23c8;
-    } */
-
-        /* .bd-mode-toggle {
-      z-index: 1500;
-    } */
-
-        /* .bd-mode-toggle .dropdown-menu .active .bi {
-      display: block !important;
-    } */
     </style>
 
 </head>
@@ -194,17 +132,16 @@
         </header>
     </div>
 
-    <div class="position-fixed end-0 mt-2 pr-2" style="margin-right: 8px;">
-        <button id="btn_new" type="button" class="btn d-flex align-items-center" style=" height: 50px; z-index: 100;"
-            onclick="newClicked()">
-            <i class="bi bi-plus" style="font-size: 2rem;"></i><span>新增日誌</span>
-        </button>
-    </div>
-
     <main>
         <div id="background" style="min-height: 67vh;">
+            <div class="sticky-top end-0 pt-2 pr-2 float-end" style="margin-right: 8px;">
+                <button id="btn_new" type="button" class="btn d-flex align-items-center"
+                    style=" height: 50px; z-index: 100;" onclick="newClicked()">
+                    <i class="bi bi-plus" style="font-size: 2rem;"></i><span>新增日誌</span>
+                </button>
+            </div>
             <div class="timeline" id="timeline">
-                <div class="container">
+                <div id="c_202407" class="container">
                     <div class="content">
                         <h2 class="subtitle">2024 July</h2>
                         <p id="content_1" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
@@ -214,7 +151,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="container">
+                <div id="c_202408" class="container">
                     <div class="content">
                         <h2 class="subtitle">2024 August</h2>
                         <p id="content_2" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
@@ -224,7 +161,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="container">
+                <div id="c_202410" class="container">
                     <div class="content">
                         <h2 class="subtitle">2024 October</h2>
                         <p id="content_3" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
@@ -234,7 +171,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="container">
+                <div id="c_202412" class="container">
                     <div class="content">
                         <h2 class="subtitle">2024 December</h2>
                         <p id="content_4" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
@@ -244,7 +181,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="container">
+                <div id="c_202503" class="container">
                     <div class="content">
                         <h2 class="subtitle">2025 March</h2>
                         <p id="content_5" class="border-bottom text-truncate content-day" data-bs-toggle="modal"
@@ -261,17 +198,37 @@
                 </div>
             </div>
         </div>
+        <div id="monthMenu" class="position-fixed top-0 float-start d-flex align-items-center" style="height: 100vh;">
+            <ul class="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-150px"
+                data-bs-theme="light" style="border: none;">
+                <li>
+                    <span class="pb-0 pt-1">Month</span>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item rounded-2" href="#c_202407">2024/07</a></li>
+                <li><a class="dropdown-item rounded-2" href="#c_202408">2024/08</a></li>
+                <li><a class="dropdown-item rounded-2" href="#c_202410">2024/10</a></li>
+                <li><a class="dropdown-item rounded-2" href="#c_202412">2024/12</a></li>
+                <li><a class="dropdown-item rounded-2" href="#c_202503">2025/03</a></li>
+            </ul>
+            <div id="menuArrow" class="bg-white rounded-end-2" style="z-index: 1000;" onclick="doAnimateShow();">
+                <i class="bi bi-caret-right-fill"></i>
+            </div>
+        </div>
+
+        <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+            <a id="top" href="#"><i class="bi bi-arrow-up-circle-fill"></i></a>
+        </div>
     </main>
 
-    <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-        <a id="top" href="#"><i class="bi bi-arrow-up-circle-fill"></i></a>
-    </div>
+
 
     <footer class="text-body-secondary py-5">
         <div class="container bg-white">
             <p class="mb-1">&copy; 2025 Yu-Chien</p>
-            <p class="mb-1">Template reference from <a
-                    href="https://getbootstrap.com/docs/5.3/examples/">Bootstrap
+            <p class="mb-1">Template reference from <a href="https://getbootstrap.com/docs/5.3/examples/">Bootstrap
                     Official Website, Examples</a>.</p>
         </div>
     </footer>
@@ -281,28 +238,24 @@
 
     <script>
         window.onload = function () {
-            var elementList = document.getElementsByClassName("subtitle");
-            var year_month_list = [];
-            for (let i = 0; i < elementList.length; i++) {
-                year_month_list.push(elementList[i].innerText);
-            }
+            var timeLine = document.getElementById("timeline");
+            var containerList =Array.from(timeLine.getElementsByClassName("container"));
 
-            ymList = formatYMList(year_month_list);
+            containerList.forEach(element => {
+                ymList.push(element.id.split("_")[1]);
+            })
         }
-
-        function formatYMList(inputList) {
-            var result = [];
-            var year, month_str, month_num;
-
-            inputList.forEach(element => {
-                year = element.split(" ")[0];
-                month = element.split(" ")[1];
-
-                result.push(year + monthDict[month]);
-            });
-
-            return result;
+        
+        function doAnimateShow() {
+            document.getElementById("monthMenu").style.left = "0px";
+            event.cancelBubble = true;
         }
+        
+        function doAnimateHide() {
+            document.getElementById("monthMenu").style.left = "-160px";
+		}
+
+        document.onclick = doAnimateHide;
     </script>
 
 </body>

@@ -145,23 +145,6 @@ document.getElementById('fileInput').addEventListener('change', function (event)
     album.insertBefore(document.createTextNode('\n'), album.childNodes[album.childNodes.length - 2]);
 });
 
-// function SortingPhotoCol(photoCol) {
-//     var album = document.getElementById('album');
-//     var elementCount = album.getElementsByTagName('small').length
-//     var smallList = album.getElementsByTagName('small');
-//     var newDate = photoCol.getElementsByTagName('small')[0].innerText.split('/').join('');
-//     for (let i = 0; i < elementCount - 1; i++) {
-//         var oldDate = smallList[i].innerText.split('/').join('');
-//         if (newDate > oldDate) {
-//             continue;
-//         }
-//         else {
-//             album.insertBefore(photoCol, album.childNodes[i * 2]);
-//             break;
-//         }
-//     }
-// }
-
 function dateFormat(date) {
     var year = date.split('/')[0];
     var month = date.split('/')[1];

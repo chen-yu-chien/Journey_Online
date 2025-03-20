@@ -2,7 +2,7 @@ var viewModal = new bootstrap.Modal(document.getElementById('viewModal'), {
     keyboard: false
 });
 
-var editContentId, newDate, newContent;
+var newDate, newContent;
 var monthDict = {
     "January": '01', "February": '02', "March": '03', "April": '04', "May": '05', "June": '06', "July": '07',
     "August": '08', "September": '09', "October": '10', "November": '11', "December": '12'
@@ -11,20 +11,19 @@ var ymList = []; // 數字型態的年月資料
 
 function contentClicked(contentId) {
     btnDiplayChange('show');
-    btn_edit.setAttribute('onclick', 'editClicked()');
-    btn_delete.setAttribute('onclick', `deleteClicked()`);
+    btn_edit.setAttribute('onclick', `editClicked(${contentId})`);
+    btn_delete.setAttribute('onclick', `deleteClicked(${contentId})`);
 
     const content_date = document.getElementById(contentId).childNodes[1].innerText;
     const content_text = document.getElementById(contentId).childNodes[3].innerText;
 
-    document.getElementById("date").innerText = content_date;
-    document.getElementById("text").innerText = content_text;
-    editContentId = contentId;
+    date.innerText = content_date;
+    text.innerText = content_text;
 
     viewModal.show();
 }
 
-function editClicked() {
+function editClicked(contentId) {
     btnDiplayChange('edit');
 
     var date = document.getElementById("date").innerText;
@@ -34,12 +33,12 @@ function editClicked() {
     var content = document.getElementById("text").innerText;
     document.getElementById("text_edit").value = content;
 
-    btn_save.setAttribute('onclick', `saveClicked()`);
+    btn_save.setAttribute('onclick', `saveClicked(${contentId})`);
     btn_cancel.setAttribute('onclick', `cancelClicked()`);
 }
 
-function deleteClicked() {
-    var parent = document.getElementById(editContentId).parentElement
+function deleteClicked(contentId) {
+    var parent = document.getElementById(contentId).parentElement
     var grand = parent.parentElement
     var del_year = parent.getElementsByTagName('h2')[0].innerText.split(' ')[0];
     var del_month = monthDict[parent.getElementsByTagName('h2')[0].innerText.split(' ')[1]];
@@ -50,7 +49,7 @@ function deleteClicked() {
         deleteModal.className = "modal modal-sheet";
     }
     del_yes.onclick = function () {
-        document.getElementById(editContentId).remove();
+        document.getElementById(contentId).remove();
         deleteModal.className = "modal modal-sheet";
         viewModal.hide();
 
@@ -68,15 +67,15 @@ function cancelClicked() {
     btnDiplayChange('cancel');
 }
 
-function saveClicked() {
+function saveClicked(contentId) {
     // btnDiplayChange('save');
     newDate = datePicker.value.split('-').join('/');
     date.innerText = newDate;
-    document.getElementById(editContentId).childNodes[1].innerText = newDate;
+    document.getElementById(contentId).childNodes[1].innerText = newDate;
 
     newContent = text_edit.value;
     text.innerText = newContent;
-    document.getElementById(editContentId).childNodes[3].innerText = newContent;
+    document.getElementById(contentId).childNodes[3].innerText = newContent;
 
     if (datePicker.value == '') {
         alert('請選擇日期!');
@@ -103,11 +102,11 @@ function saveClicked() {
             newIndex = ymList.indexOf(newYM);
             createContainer(newDate, newContent, newIndex);
 
-            const count = document.getElementById(editContentId).parentElement.getElementsByTagName('p').length;
-            const parentContainer = document.getElementById(editContentId).parentElement.parentElement;
-            document.getElementById(editContentId).remove();
+            const count = document.getElementById(contentId).parentElement.getElementsByTagName('p').length;
+            const parentContainer = document.getElementById(contentId).parentElement.parentElement;
+            document.getElementById(contentId).remove();
             var newParagraph = document.getElementById(`content_${count}`);
-            newParagraph.id = editContentId;
+            newParagraph.id = contentId;
 
             if (parentContainer.getElementsByTagName('p').length < 1) {
                 parentContainer.remove();
@@ -115,7 +114,7 @@ function saveClicked() {
         }
         else if (ym && index >= 0) {
             console.log('yes');
-            SortingParagraph()    
+            SortingParagraph(contentId);    
         }
         else {
             alert('請選擇日期!');
@@ -125,8 +124,8 @@ function saveClicked() {
     }
 }
 
-function SortingParagraph() {
-    var content = document.getElementById(`${editContentId}`).parentElement;
+function SortingParagraph(contentId) {
+    var content = document.getElementById(contentId).parentElement;
     var pElements = Array.from(content.getElementsByTagName('p'));
     var h2Element = content.getElementsByTagName('h2')[0];
     

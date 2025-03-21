@@ -59,7 +59,22 @@ function deleteClicked(contentId) {
             var index = ymList.indexOf(deleteYM);
             ymList.splice(index, 1);
         }
+
+        refreshMonthMenu();
     }
+}
+
+function refreshMonthMenu() {
+    var ul = document.getElementById('monthMenu').getElementsByTagName('ul')[0];
+    var aElements = Array.from(ul.getElementsByTagName('a'));
+
+    aElements.forEach(element => {
+        var href = element.getAttribute('href');
+        var ym = href.split('_')[1];
+        if (ymList.indexOf(ym) < 0) {
+            element.parentElement.remove();
+        }
+    })
 }
 
 function cancelClicked() {
@@ -80,7 +95,7 @@ function saveClicked(contentId, trigger) { // trigger: 'new' or 'edit'
             var content = document.getElementById(contentId);
             date.innerText = newDate;
             content.getElementsByTagName('span')[0].innerText = newDate;
-        
+
             text.innerText = newContent;
             content.getElementsByTagName('span')[1].innerText = newContent;
         }
@@ -88,7 +103,7 @@ function saveClicked(contentId, trigger) { // trigger: 'new' or 'edit'
         var newYM = formatYM(newDate);
         var index = ymList.indexOf(newYM);
 
-        if (newYM && index < 0) {
+        if (index < 0) {
             for (let i = 0; i < ymList.length; i++) {
                 if (newYM < ymList[i]) {
                     ymList.splice(i, 0, newYM);
@@ -104,33 +119,25 @@ function saveClicked(contentId, trigger) { // trigger: 'new' or 'edit'
             createContainer(newDate, newContent, newIndex);
 
             if (trigger === 'edit') {
-                const origin_grand = document.getElementById(contentId).parentElement.parentElement;
-                const timeline = document.getElementById('timeline');
-                const pCount = timeline.getElementsByTagName('p').length;
-                document.getElementById(contentId).remove();
-                var newParagraph = document.getElementById(`content_${pCount}`);
-                newParagraph.id = contentId;
-                newParagraph.setAttribute('onclick', `contentClicked("${contentId}")`);
-                
-                if (origin_grand.getElementsByTagName('p').length < 1) {
-                    origin_grand.remove();
-                }
+                removeEmptyContainer(contentId);
             }
         }
-        else if (newYM && index >= 0) {
+        else {
             console.log('yes');
             if (trigger === 'new') {
                 contentId = createContent(newDate, newContent, index); // createContent() returns id for new <p>
             }
+            else {
+                createContent(newDate, newContent, index);
+                removeEmptyContainer(contentId);
+            }
 
-            SortingParagraph(contentId);    
+            SortingParagraph(contentId);
 
-        }
-        else {
-            alert('請選擇日期!');
         }
 
         if (trigger === 'edit') {
+            refreshMonthMenu();
             btnDiplayChange('save');
         }
         else {
@@ -139,11 +146,27 @@ function saveClicked(contentId, trigger) { // trigger: 'new' or 'edit'
     }
 }
 
+function removeEmptyContainer(contentId) {
+    const origin_grand = document.getElementById(contentId).parentElement.parentElement; // origin_grand: <div class="container">
+    const timeline = document.getElementById('timeline');
+    const pCount = timeline.getElementsByTagName('p').length;
+    document.getElementById(contentId).remove();
+    var newParagraph = document.getElementById(`content_${pCount}`);
+    newParagraph.id = contentId;
+    newParagraph.setAttribute('onclick', `contentClicked("${contentId}")`);
+
+    if (origin_grand.getElementsByTagName('p').length < 1) {
+        var removeYM = origin_grand.id.split('_')[1];
+        ymList.splice(ymList.indexOf(removeYM), 1);
+        origin_grand.remove();
+    }
+}
+
 function SortingParagraph(contentId) {
     var parentContent = document.getElementById(contentId).parentElement;
     var pElements = Array.from(parentContent.getElementsByTagName('p'));
     var h2Element = parentContent.getElementsByTagName('h2')[0];
-    
+
     pElements.forEach(element => {
         console.log(element.id);
     })
@@ -158,7 +181,7 @@ function SortingParagraph(contentId) {
     parentContent.appendChild(document.createTextNode('\n'));
     parentContent.appendChild(h2Element);
     parentContent.appendChild(document.createTextNode('\n'));
-    
+
     pElements.forEach(element => {
         parentContent.appendChild(element);
         parentContent.appendChild(document.createTextNode('\n'));
@@ -172,9 +195,9 @@ function newClicked() {
     var createDate = new Date().toLocaleDateString();
     var format_createDate = dateFormat(createDate);
     datePicker.value = format_createDate;
-    
+
     text_edit.value = '';
-    
+
     btn_cancel.setAttribute('onclick', 'newCancelClicked()');
     btn_save.setAttribute('onclick', `saveClicked('', 'new')`);
 

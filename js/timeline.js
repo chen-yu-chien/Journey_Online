@@ -14,8 +14,10 @@ function contentClicked(contentId) {
     btn_edit.setAttribute('onclick', `editClicked('${contentId}')`);
     btn_delete.setAttribute('onclick', `deleteClicked('${contentId}')`);
 
-    const content_date = document.getElementById(contentId).childNodes[1].innerText;
-    const content_text = document.getElementById(contentId).childNodes[3].innerText;
+    var content = document.getElementById(contentId);
+    console.log(contentId);
+    const content_date = content.getElementsByTagName('span')[0].innerText;
+    const content_text = content.getElementsByTagName('span')[1].innerText
 
     date.innerText = content_date;
     text.innerText = content_text;
@@ -26,23 +28,22 @@ function contentClicked(contentId) {
 function editClicked(contentId) {
     btnDiplayChange('edit');
 
-    var date = document.getElementById("date").innerText;
-    var format_date = dateFormat(date);
-    document.getElementById("datePicker").value = format_date;
+    var targetDate = date.innerText;
+    var format_date = dateFormat(targetDate);
+    datePicker.value = format_date;
 
-    var content = document.getElementById("text").innerText;
-    document.getElementById("text_edit").value = content;
+    var content = text.innerText;
+    text_edit.value = content;
 
-    btn_save.setAttribute('onclick', `saveClicked('${contentId}')`);
+    // btn_save.setAttribute('onclick', `saveClicked('${contentId}')`);
+    btn_save.setAttribute('onclick', `saveClicked('${contentId}', 'edit')`);
     btn_cancel.setAttribute('onclick', `cancelClicked()`);
 }
 
 function deleteClicked(contentId) {
-    var parent = document.getElementById(contentId).parentElement
-    var grand = parent.parentElement
-    var del_year = parent.getElementsByTagName('h2')[0].innerText.split(' ')[0];
-    var del_month = monthDict[parent.getElementsByTagName('h2')[0].innerText.split(' ')[1]];
-    var deleteYM = del_year + del_month;
+    var parentDiv = document.getElementById(contentId).parentElement
+    var grandDiv = parentDiv.parentElement
+    var deleteYM = grandDiv.id.split('_')[1];
 
     deleteModal.className += " d-flex align-items-center ";
     del_no.onclick = function () {
@@ -53,12 +54,10 @@ function deleteClicked(contentId) {
         deleteModal.className = "modal modal-sheet";
         viewModal.hide();
 
-        if (parent.getElementsByTagName('p').length <= 0) {
-            grand.remove();
-            console.log(deleteYM)
+        if (parentDiv.getElementsByTagName('p').length <= 0) {
+            grandDiv.remove();
             var index = ymList.indexOf(deleteYM);
             ymList.splice(index, 1);
-            console.log(ymList)
         }
     }
 }
@@ -67,122 +66,8 @@ function cancelClicked() {
     btnDiplayChange('cancel');
 }
 
-function saveClicked(contentId) {
-    newDate = datePicker.value.split('-').join('/');
-    date.innerText = newDate;
-    document.getElementById(contentId).childNodes[1].innerText = newDate;
 
-    newContent = text_edit.value;
-    text.innerText = newContent;
-    document.getElementById(contentId).childNodes[3].innerText = newContent;
-
-    if (datePicker.value == '') {
-        alert('請選擇日期!');
-        return;
-    }
-    else {
-        var ym = formatYM(newDate);
-        var index = ymList.indexOf(ym);
-
-        if (ym && index < 0) {
-            var newYM = formatYM(newDate);
-            var newIndex;
-            for (let i = 0; i < ymList.length; i++) {
-                if (newYM < ymList[i]) {
-                    ymList.splice(i, 0, newYM);
-                    break;
-                }
-            }
-
-            if (ymList.indexOf(newYM) < 0) {
-                ymList.push(newYM);
-            }
-
-            newIndex = ymList.indexOf(newYM);
-            createContainer(newDate, newContent, newIndex);
-
-            const count = document.getElementById(contentId).parentElement.getElementsByTagName('p').length;
-            const parentContainer = document.getElementById(contentId).parentElement.parentElement;
-            document.getElementById(contentId).remove();
-            var newParagraph = document.getElementById(`content_${count}`);
-            newParagraph.id = contentId;
-
-            if (parentContainer.getElementsByTagName('p').length < 1) {
-                parentContainer.remove();
-            }
-        }
-        else if (ym && index >= 0) {
-            console.log('yes');
-            SortingParagraph(contentId);    
-        }
-        else {
-            alert('請選擇日期!');
-        }
-
-        btnDiplayChange('save');
-    }
-}
-
-function SortingParagraph(contentId) {
-    var content = document.getElementById(contentId).parentElement;
-    var pElements = Array.from(content.getElementsByTagName('p'));
-    var h2Element = content.getElementsByTagName('h2')[0];
-    
-    pElements.forEach(element => {
-        console.log(element.id);
-    })
-
-    pElements.sort(function (pA, pB) {
-        var dateA = pA.getElementsByClassName('text-secondary')[0].innerText.split('/').join('');
-        var dateB = pB.getElementsByClassName('text-secondary')[0].innerText.split('/').join('');
-        return dateA - dateB;
-    })
-
-    content.innerHTML = '';
-    content.appendChild(document.createTextNode('\n'));
-    content.appendChild(h2Element);
-    content.appendChild(document.createTextNode('\n'));
-    
-    pElements.forEach(element => {
-        content.appendChild(element);
-        content.appendChild(document.createTextNode('\n'));
-    })
-
-    console.log(content.childNodes);
-}
-
-
-function btnDiplayChange() {
-    document.getElementById("date").setAttribute("style", "display: inline");
-    document.getElementById("datePicker").setAttribute("style", "display: none");
-
-    document.getElementById("text").setAttribute("style", "display: inline");
-    document.getElementById("text_edit").setAttribute("style", "display: none");
-
-    document.getElementById("btn_edit").setAttribute("style", "display: inline-block");
-    document.getElementById("btn_save").setAttribute("style", "display: none");
-    document.getElementById("btn_cancel").setAttribute("style", "display: none");
-}
-
-function newClicked() {
-    btnDiplayChange('new');
-    var createDate = new Date().toLocaleDateString();
-    var format_createDate = dateFormat(createDate);
-    document.getElementById("datePicker").value = format_createDate;
-    
-    text_edit.value = '';
-    
-    btn_cancel.setAttribute('onclick', 'newCancelClicked()');
-    btn_save.setAttribute('onclick', 'newSaveClicked()');
-
-    viewModal.show();
-}
-
-function newCancelClicked() {
-    viewModal.hide();
-}
-
-function newSaveClicked() {
+function saveClicked(contentId, trigger) { // trigger: 'new' or 'edit'
     if (datePicker.value == '') {
         alert('請選擇日期!');
         return;
@@ -190,16 +75,20 @@ function newSaveClicked() {
     else {
         newDate = datePicker.value.split('-').join('/');
         newContent = text_edit.value;
-        var ym = formatYM(newDate);
-        console.log('ym ' + ym);
-        console.log(ymList);
 
-        var index = ymList.indexOf(ym);
-        console.log('index ' + index);
+        if (trigger === 'edit') {
+            var content = document.getElementById(contentId);
+            date.innerText = newDate;
+            content.getElementsByTagName('span')[0].innerText = newDate;
+        
+            text.innerText = newContent;
+            content.getElementsByTagName('span')[1].innerText = newContent;
+        }
 
-        if (ym && index < 0) {
-            var newYM = formatYM(newDate);
-            var newIndex;
+        var newYM = formatYM(newDate);
+        var index = ymList.indexOf(newYM);
+
+        if (newYM && index < 0) {
             for (let i = 0; i < ymList.length; i++) {
                 if (newYM < ymList[i]) {
                     ymList.splice(i, 0, newYM);
@@ -211,21 +100,90 @@ function newSaveClicked() {
                 ymList.push(newYM);
             }
 
-            console.log('new ymlist: ', ymList);
-
-            newIndex = ymList.indexOf(newYM);
+            var newIndex = ymList.indexOf(newYM);
             createContainer(newDate, newContent, newIndex);
+
+            if (trigger === 'edit') {
+                const origin_grand = document.getElementById(contentId).parentElement.parentElement;
+                const timeline = document.getElementById('timeline');
+                const pCount = timeline.getElementsByTagName('p').length;
+                document.getElementById(contentId).remove();
+                var newParagraph = document.getElementById(`content_${pCount}`);
+                newParagraph.id = contentId;
+                newParagraph.setAttribute('onclick', `contentClicked("${contentId}")`);
+                
+                if (origin_grand.getElementsByTagName('p').length < 1) {
+                    origin_grand.remove();
+                }
+            }
         }
-        else if (ym && index >= 0) {
+        else if (newYM && index >= 0) {
             console.log('yes');
-            createContent(newDate, newContent, index);
+            if (trigger === 'new') {
+                contentId = createContent(newDate, newContent, index); // createContent() returns id for new <p>
+            }
+
+            SortingParagraph(contentId);    
+
         }
         else {
             alert('請選擇日期!');
         }
 
-        viewModal.hide();
+        if (trigger === 'edit') {
+            btnDiplayChange('save');
+        }
+        else {
+            viewModal.hide();
+        }
     }
+}
+
+function SortingParagraph(contentId) {
+    var parentContent = document.getElementById(contentId).parentElement;
+    var pElements = Array.from(parentContent.getElementsByTagName('p'));
+    var h2Element = parentContent.getElementsByTagName('h2')[0];
+    
+    pElements.forEach(element => {
+        console.log(element.id);
+    })
+
+    pElements.sort(function (pA, pB) {
+        var dateA = pA.getElementsByTagName('span')[0].innerText.split('/').join('');
+        var dateB = pB.getElementsByTagName('span')[0].innerText.split('/').join('');
+        return dateA - dateB;
+    })
+
+    parentContent.innerHTML = '';
+    parentContent.appendChild(document.createTextNode('\n'));
+    parentContent.appendChild(h2Element);
+    parentContent.appendChild(document.createTextNode('\n'));
+    
+    pElements.forEach(element => {
+        parentContent.appendChild(element);
+        parentContent.appendChild(document.createTextNode('\n'));
+    })
+
+    console.log(parentContent.childNodes);
+}
+
+function newClicked() {
+    btnDiplayChange('new');
+    var createDate = new Date().toLocaleDateString();
+    var format_createDate = dateFormat(createDate);
+    datePicker.value = format_createDate;
+    
+    text_edit.value = '';
+    
+    btn_cancel.setAttribute('onclick', 'newCancelClicked()');
+    btn_save.setAttribute('onclick', `saveClicked('', 'new')`);
+
+
+    viewModal.show();
+}
+
+function newCancelClicked() {
+    viewModal.hide();
 }
 
 function createContainer(newDate, newContent, newIndex) {
@@ -282,33 +240,10 @@ function createContent(newDate, newContent, index) {
     var contentBlock = document.getElementsByClassName('content')[index];
     var p = createParagraph(newDate, newContent);
 
-    for (let i = 0; i < contentBlock.getElementsByClassName('text-secondary').length; i++) {
-        var oldDate = contentBlock.getElementsByClassName('text-secondary')[i].innerText;
-        var insertIndex = 2 * i + 3;
+    contentBlock.appendChild(p);
+    contentBlock.appendChild(document.createTextNode('\n'));
 
-        if (i == contentBlock.getElementsByClassName('text-secondary').length - 1) {
-            if (newDate > oldDate) {
-                contentBlock.appendChild(p);
-                contentBlock.appendChild(document.createTextNode('\n'));
-            }
-            else {
-                contentBlock.insertBefore(p, contentBlock.childNodes[insertIndex]);
-                contentBlock.insertBefore(document.createTextNode('\n'), contentBlock.childNodes[insertIndex + 1]);
-            }
-            break;
-        }
-        else {
-            if (newDate > oldDate) {
-                continue;
-            }
-            else {
-                contentBlock.insertBefore(p, contentBlock.childNodes[insertIndex]);
-                contentBlock.insertBefore(document.createTextNode('\n'), contentBlock.childNodes[insertIndex + 1]);
-                break;
-            }
-        }
-
-    }
+    return p.id;
 
 }
 

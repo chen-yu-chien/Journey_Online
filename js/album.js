@@ -2,8 +2,9 @@ var editModal = new bootstrap.Modal(document.getElementById('editModal'), {
     keyboard: false
 });
 
-function photoClicked(photoName, contentId) {
-    document.getElementById("photo_show").src = "../img/photos/" + photoName;
+// function photoClicked(photoName, contentId) {
+function photoClicked(photoSrc, contentId) {
+    document.getElementById("photo_show").src = photoSrc;
     document.getElementById("modal_footer").innerText = document.getElementById(contentId).innerText;
     var myModal = new bootstrap.Modal(document.getElementById('photoModal'), {
         keyboard: false
@@ -107,7 +108,8 @@ document.getElementById('fileInput').addEventListener('change', function (event)
     cardContent.className = 'card-text text-truncate';
     cardContent.innerText = '紀錄一下～';
 
-    img.setAttribute('onclick', `photoClicked('${file.name}', '${cardContent.id}')`);
+    // img.setAttribute('onclick', `photoClicked('${file.name}', '${cardContent.id}')`);
+    img.setAttribute('onclick', `photoClicked('${img.src}', '${cardContent.id}')`);
 
     var cardFooter = document.createElement('div');
     cardFooter.className = 'd-flex justify-content-between align-items-center';
@@ -143,6 +145,8 @@ document.getElementById('fileInput').addEventListener('change', function (event)
 
     album.insertBefore(photoCol, album.childNodes[album.childNodes.length - 2]);
     album.insertBefore(document.createTextNode('\n'), album.childNodes[album.childNodes.length - 2]);
+
+    console.log(file);
 });
 
 function dateFormat(date) {

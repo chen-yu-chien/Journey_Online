@@ -145,8 +145,15 @@ i {
         left: 31px;
     }
 
+    .timeline .container {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+      }
+
     /* Make sure that all arrows are pointing leftwards */
-    .timeline .container::before {
+    .timeline .container:nth-child(odd)::before,
+    .timeline .container:nth-child(even)::before {
         left: 60px;
         border: medium solid white;
         border-width: 10px 10px 10px 0;
@@ -154,13 +161,13 @@ i {
     }
 
     /* Make sure all circles are at the same spot */
-    .timeline .left::after,
-    .timeline .right::after {
+    .timeline .container:nth-child(odd)::after,
+    .timeline .container:nth-child(even)::after {
         left: 15px;
     }
 
     /* Make all right containers behave like the left ones */
-    .timeline .right {
+    .timeline .container:nth-child(even) {
         left: 0%;
     }
 }

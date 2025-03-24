@@ -115,6 +115,8 @@
     <link rel="stylesheet" href="../css/headers.css">
     <link rel="stylesheet" href="../css/popover.css">
     <link rel="stylesheet" href="../css/county.css">
+    <link rel="stylesheet" href="../css/dropdowns.css">
+
 </head>
 
 <body>
@@ -147,13 +149,32 @@
         </header>
     </div>
 
-    <div id="main" class="bg-info bg-opacity-50">
-        <script src="../js/taiwan.js"></script>
-    </div>
-
-    <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-        <a id="top" href="#"><i class="bi bi-arrow-up-circle-fill"></i></a>
-    </div>
+    <main>
+        <div id="main" class="bg-info bg-opacity-50">
+            <script src="../js/taiwan.js"></script>
+        </div>    
+        <div id="areaMenu" class="position-fixed top-0 float-start d-flex align-items-center" style="height: 100vh;">
+            <ul class="dropdown-menu position-static d-grid gap-1 p-2 rounded-3 mx-0 shadow w-150px"
+                data-bs-theme="light" style="border: none;" onclick="doAnimateShow();">
+                <li>
+                    <span class="pb-0 pt-1">Area</span>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item rounded-2" href="#" onclick="focusNorth()">北部</a></li>
+                <li><a class="dropdown-item rounded-2" href="#Taoyuan" onclick="focusWest()">中部</a></li>
+                <li><a class="dropdown-item rounded-2" href="#Changhua" onclick="focusSouth()">南部</a></li>
+                <li><a class="dropdown-item rounded-2" href="#Yilan" onclick="focusEast()">東部</a></li>
+            </ul>
+            <div id="menuArrow" class="bg-white rounded-end-2" style="z-index: 1000;" onclick="doAnimateShow();">
+                <i class="bi bi-caret-right-fill"></i>
+            </div>
+        </div>
+        <div class="position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+            <a id="top" href="#"><i class="bi bi-arrow-up-circle-fill"></i></a>
+        </div>
+    </main>
 
     <footer class="text-body-secondary py-5">
         <div class="container bg-white">
@@ -278,6 +299,18 @@
             path.setAttribute("data-bs-placement", place);
             path.setAttribute("data-bs-custom-class", "custom-popover");
         });
+
+        function doAnimateShow() {
+            document.getElementById("areaMenu").style.left = "0px";
+            event.cancelBubble = true;
+        }
+        
+        function doAnimateHide() {
+            document.getElementById("areaMenu").style.left = "-160px";
+		}
+
+        document.onclick = doAnimateHide;
+        
     </script>
 </body>
 

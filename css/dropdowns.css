@@ -101,7 +101,7 @@ ul li span {
     background-color: #2458a19b;
 }
 
-#monthMenu {
+#monthMenu, #areaMenu {
     left: -160px;
     transition: left 0.5s ease-out;
 }
